@@ -1,0 +1,25 @@
+enable
+conf t
+hostname RT-01
+enable secret  senai#10-10
+banner motd "ACESSO APENAS PARA PESSOAS AUTORIZADAS!"
+username lucasjorge privilege 15 secret batata*0
+line console 0
+login local
+exit
+interface g0/0
+no shutdown
+interface g0/0.10
+encapsulation dot1q 10
+ip address 192.168.0.1 255.255.255.0
+ip helper-address 172.16.0.10
+interface g0/0.20
+encapsulation dot1q 20
+ip address 192.168.1.1 255.255.255.0
+ip helper-address 172.16.0.10
+interface s0/0/0
+ip address 200.100.100.1 255.255.255.252
+no shutdown
+exit
+ip route 172.16.0.0 255.255.255.240 200.100.100.2
+do wr
